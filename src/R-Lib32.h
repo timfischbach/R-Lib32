@@ -37,14 +37,14 @@ void setVersion(String ver);
 String getVersion();
 void setDlLink(String DLL);
 String getDlLink();
-void setDevLink(String DEL);
-String getDevLink();
-void setDevTag(String DTAG);
-String getDevTag();
 void setBetaState(bool sbeta);
 bool getBetaState();
 void setDevState(bool sdev);
 bool getDevState();
 bool varCheck();
+void UFFunction(uint8_t *data, size_t len);
+void saveOV(String oldversion);
+String loadOV();
+
 
 #endif
