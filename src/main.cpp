@@ -1,44 +1,43 @@
 #include <Arduino.h>
 #include "R-Lib32.h"
-
-
+R_Lib32 rlib;
 void setup()
 {
-   //R_LIB SETUP
-   setDeviceName("TestDevice");
-   setVersion("1.0.0a");
-   setDlLink("http://dl.timfischbach.com/firmware/testdevice/");
-   setDevLink("http://dl.timfischbach.com/dev/");
-   setBetaState(true);
-   //R_LIB SETUP END
-   delay(3000);
+   // R_LIB SETUP
+   rlib.setDeviceName("TestDevice");
+   rlib.setVersion("v1.0.1a");
+   rlib.setDlLink("https://dl.timfischbach.com/prv/firmware/testdevice/");
+   rlib.setSSLState(true);
+   rlib.setAttemptsBeforeInsecureSSL(2);
+   // R_LIB SETUP END
+   delay(5000);
    Serial.begin(115200);
-   Serial.println("TESTING PROGRAMM FOR R-LIB8266");
-   Serial.println(getLibVersion());
-   connectWIFI(loadWIFI("SSID"), loadWIFI("PASS"));
+   Serial.print("TESTING PROGRAMM FOR R-LIB8266 ");
+   Serial.println(rlib.getLibVersion());
+   rlib.connectWIFI();
    int c = 0;
-   while (checkWIFI() == false and c < 100)
+   while (rlib.checkWIFI() == false and c < 100)
    {
-      delay(50);
+      delay(100);
       c++;
    }
-   if (checkWIFI() == false)
+   if (rlib.checkWIFI() == false)
    {
-      connectWIFIUser("TestDevice", "");
+      rlib.connectWIFIUser("TestDevice", "");
    }
-   while (checkWIFI() == false)
+   while (rlib.checkWIFI() == false)
    {
-      connectWIFIUserHandle();
+      rlib.connectWIFIUserHandle();
       delay(50);
    }
-   dataTransmission();
-   delay(1000);
-   if (checkUpdate() == "UPDATE_AVAILABLE")
+}
+   void loop()
    {
-    performUpdate();
+      rlib.dataTransmission();
+      delay(1000);
+      if (rlib.checkUpdate() == "UPDATE_AVAILABLE")
+      {
+         Serial.println(rlib.performUpdate());
+      }
+      delay(20000);
    }
-}
-
-void loop()
-{
-}
