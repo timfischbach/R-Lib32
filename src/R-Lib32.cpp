@@ -196,7 +196,10 @@ bool R_Lib32::checkWIFI()
 void R_Lib32::resetWIFI()
 {
   WiFi.disconnect();
-  WiFi.eraseAP();
+  preferences.begin("credentials", false);
+  preferences.putString("ssid", "");
+  preferences.putString("password", "");
+  preferences.end();
   Serial.println("[WIFI] WIFI reset successful.");
 }
 
