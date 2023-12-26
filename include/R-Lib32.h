@@ -2,6 +2,14 @@
 #define RLib32
 
 #include <Arduino.h>
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <HttpUpdate.h>
+#include <WebServer.h>
+#include <EEPROM.h>
+#include <time.h>
+#include <WiFiClientSecure.h>
+#include <Preferences.h>
 
 class R_Lib32
 {
@@ -42,10 +50,11 @@ public:
     void setSSLInsecureState(bool sinsecure);
     bool getSSLInsecureState();
     void SSLSetup();
-    String dataTransmission();
+    String dataTransmission(String status = "OK");
     void setAttemptsBeforeInsecureSSL(int sattempts);
     int getAttemptsBeforeInsecureSSL();
     void executeAttemptsBeforeInsecureSSL();
+    String urlEncode(String str);
 
 private:
 
